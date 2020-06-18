@@ -8,6 +8,7 @@ module Amoeba
       raised:         false,
       dup_method:     :dup,
       remap_method:   nil,
+      limit:          nil,
       includes:       {},
       excludes:       {},
       clones:         [],
@@ -40,7 +41,7 @@ module Amoeba
     DEFAULTS.freeze
 
     DEFAULTS.each do |key, value|
-      value.freeze if value.is_a?(Array) || value.is_a?(Hash) || 
+      value.freeze if value.is_a?(Array) || value.is_a?(Hash) || key=="limit"
       class_eval <<-EOS, __FILE__, __LINE__ + 1
         def #{key}          # def enabled
           @config[:#{key}]  #   @config[:enabled]
@@ -59,7 +60,7 @@ module Amoeba
       @config[:enabled] = true
     end
 
-    def limit(value = nil)
+    def limit_records(value = nil)
       if value.is_a?(::Fixnum)
         @config[:limit] = value
       end
