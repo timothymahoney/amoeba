@@ -60,9 +60,9 @@ module Amoeba
       @config[:enabled] = true
     end
 
-    def limit(number=nil)
+    def limit(value = nil)
       if value.is_a?(::Fixnum)
-        @config[:limit] = number
+        @config[:limit] = value
       end
     end
 
