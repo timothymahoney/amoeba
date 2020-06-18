@@ -60,11 +60,11 @@ module Amoeba
       @config[:enabled] = true
     end
 
-    # def limit(value = nil)
-    #   if value.is_a?(::Fixnum)
-    #     @config[:limit] = value
-    #   end
-    # end
+    def limit(value = nil)
+      if value.is_a?(::Fixnum)
+        @config[:limit] = value
+      end
+    end
 
     def disable
       @config[:enabled] = false
