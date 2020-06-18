@@ -8,6 +8,7 @@ module Amoeba
       raised:         false,
       dup_method:     :dup,
       remap_method:   nil,
+      limit:          nil,
       includes:       {},
       excludes:       {},
       clones:         [],
@@ -57,6 +58,12 @@ module Amoeba
 
     def enable
       @config[:enabled] = true
+    end
+
+    def limit(number)
+      if value.is_a?(::Fixnum)
+        @config[:limit] = number
+      end
     end
 
     def disable
