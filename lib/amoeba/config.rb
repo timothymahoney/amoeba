@@ -65,7 +65,7 @@ module Amoeba
         puts "Value: #{value}"
         puts "Type: #{value.class}"
   
-        @config[:limit] = value.to_sym
+        @config[:limit] = value.to_i
       end
     end
 
