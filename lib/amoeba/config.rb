@@ -41,7 +41,7 @@ module Amoeba
     DEFAULTS.freeze
 
     DEFAULTS.each do |key, value|
-      value.freeze if value.is_a?(Array) || value.is_a?(Hash)
+      value.freeze if value.is_a?(Array) || value.is_a?(Hash) || key != "limit"
       class_eval <<-EOS, __FILE__, __LINE__ + 1
         def #{key}          # def enabled
           @config[:#{key}]  #   @config[:enabled]
