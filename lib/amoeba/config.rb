@@ -61,9 +61,10 @@ module Amoeba
     end
 
     def limit_records(value = nil)
-      puts "Value: #{value}"
-      puts "Type: #{value.class}"
       if value.is_a?(::Fixnum)
+        puts "Value: #{value}"
+        puts "Type: #{value.class}"
+  
         @config[:limit] = value
       end
     end
