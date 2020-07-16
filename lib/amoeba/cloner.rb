@@ -16,7 +16,7 @@ module Amoeba
       @options    = options
       @object_klass = @old_object.class
       inherit_parent_settings
-      @new_object = object.__send__(amoeba.dup_method)
+      @new_object = object.__send__(amoeba.dup_method).limit(amoeba.limit)
     end
 
     def run
