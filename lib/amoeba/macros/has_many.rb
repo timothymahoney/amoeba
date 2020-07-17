@@ -14,10 +14,9 @@ module Amoeba
         # actually copy  and reassociate the  new children
         # rather than only maintaining the associations
         puts "Settings: #{@cloner.amoeba.inspect}"
-        limit_val = nil
-        # if relation_name in settings.limit_relations
-        #   limit_val = whatever settings
-        # end
+        # limit_val = nil
+        limit_val ||= @cloner.amoeba.limit.key(relation_name)
+        
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           relation_name = remapped_relation_name(relation_name)
           # associate this new child to the new parent object
