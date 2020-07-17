@@ -15,8 +15,8 @@ module Amoeba
         # rather than only maintaining the associations
         puts "Settings: #{@cloner.amoeba.inspect}"
         # limit_val = nil
-        limit_val ||= @cloner.amoeba.limit.key(relation_name)
-        
+        limit_val ||= @cloner.amoeba.limits.key(relation_name)
+        puts "Limit val: #{limit_val}"
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           relation_name = remapped_relation_name(relation_name)
           # associate this new child to the new parent object
