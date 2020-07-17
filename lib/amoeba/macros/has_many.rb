@@ -6,7 +6,7 @@ module Amoeba
           follow_with_clone(relation_name)
         else
           follow_without_clone(relation_name, association)
-        end
+        end 
       end
 
       def follow_with_clone(relation_name)
@@ -14,7 +14,11 @@ module Amoeba
         # actually copy  and reassociate the  new children
         # rather than only maintaining the associations
         puts "Settings: #{@cloner.amoeba.inspect}"
-        @old_object.__send__(relation_name).each do |old_obj|
+        limit_val = nil
+        # if relation_name in settings.limit_relations
+        #   limit_val = whatever settings
+        # end
+        @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           relation_name = remapped_relation_name(relation_name)
           # associate this new child to the new parent object
           @new_object.__send__(relation_name) << old_obj.amoeba_dup

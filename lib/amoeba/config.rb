@@ -8,7 +8,7 @@ module Amoeba
       raised:         false,
       dup_method:     :dup,
       remap_method:   nil,
-      limit:          nil,
+      limits:         {},
       includes:       {},
       excludes:       {},
       clones:         [],
@@ -60,14 +60,17 @@ module Amoeba
       @config[:enabled] = true
     end
 
-    def limit_records(value)
-      if value.is_a?(::Fixnum)
+    def limit_relations(value)
+      puts "Value: #{value}"
+      puts "Type: #{value.class}"
+
+      if value.is_a?(Hash)
         puts "Value: #{value}"
         puts "Type: #{value.class}"
   
-        @config[:limit] = value.to_i
+        @config[:limits] = value
 
-        puts @config[:limit]
+        puts @config[:limits]
       end
     end
 
