@@ -35,7 +35,7 @@ module Amoeba
         puts "Settings: #{@cloner.amoeba.inspect}"
         return if association.is_a?(ActiveRecord::Reflection::ThroughReflection)
         
-        limit_val = @cloner.amoeba.limits[relation_name.to_sym] || nil
+        limit_val = @cloner.amoeba.limits[relation_name] || nil
         puts "Limit val: #{limit_val}"
         puts "Limits: #{@cloner.amoeba.limits}"
         puts "Relation Name: #{relation_name}"
