@@ -37,6 +37,9 @@ module Amoeba
         
         limit_val = @cloner.amoeba.limits[relation_name.to_sym] || nil
         puts "Limit val: #{limit_val}"
+        puts "Limits: #{@cloner.amoeba.limits}"
+        puts "Relation Name: #{relation_name}"
+        puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           copy_of_obj = old_obj.amoeba_dup(@options)
