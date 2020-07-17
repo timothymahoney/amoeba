@@ -33,8 +33,10 @@ module Amoeba
         # on the model
         puts "Settings: #{@cloner.amoeba.inspect}"
         return if association.is_a?(ActiveRecord::Reflection::ThroughReflection)
+        limit_val ||= @cloner.amoeba.limits.key(relation_name)
+        puts "Limit val: #{limit_val}"
 
-        @old_object.__send__(relation_name).each do |old_obj|
+        @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           copy_of_obj = old_obj.amoeba_dup(@options)
           copy_of_obj[:"#{association.foreign_key}"] = nil
           relation_name = remapped_relation_name(relation_name)
