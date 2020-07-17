@@ -3,7 +3,7 @@ module Amoeba
     class HasAndBelongsToMany < ::Amoeba::Macros::Base
       def follow(relation_name, _association)
         clone = @cloner.amoeba.clones.include?(relation_name.to_sym)
-        @old_object.__send__(relation_name).limit(@cloner.amoeba.limit).each do |old_obj|
+        @old_object.__send__(relation_name).each do |old_obj|
           fill_relation(relation_name, old_obj, clone)
         end
       end
