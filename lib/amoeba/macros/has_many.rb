@@ -13,10 +13,9 @@ module Amoeba
         # This  is  a  M:M  "has many  through"  where  we
         # actually copy  and reassociate the  new children
         # rather than only maintaining the associations
-        puts "Settings: #{@cloner.amoeba.inspect}"
-        # limit_val = nil
         limit_val = @cloner.amoeba.limits[relation_name.to_sym] || nil
-        puts "Limit val: #{limit_val}"
+        puts "Relation Name: #{relation_name}"
+        puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           relation_name = remapped_relation_name(relation_name)
@@ -32,12 +31,9 @@ module Amoeba
         # effectively do what is desired anyway, the through
         # association is really just for convenience usage
         # on the model
-        puts "Settings: #{@cloner.amoeba.inspect}"
         return if association.is_a?(ActiveRecord::Reflection::ThroughReflection)
         
         limit_val = @cloner.amoeba.limits[relation_name] || nil
-        puts "Limit val: #{limit_val}"
-        puts "Limits: #{@cloner.amoeba.limits}"
         puts "Relation Name: #{relation_name}"
         puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
