@@ -17,8 +17,6 @@ module Amoeba
       @object_klass = @old_object.class
       inherit_parent_settings
       @new_object = object.__send__(amoeba.dup_method)
-      puts @old_object.inspect
-      puts @new_object.inspect
     end
 
     def run
