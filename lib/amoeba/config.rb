@@ -8,6 +8,7 @@ module Amoeba
       raised:         false,
       dup_method:     :dup,
       remap_method:   nil,
+      copy_to:        nil,
       limits:         {},
       includes:       {},
       excludes:       {},
