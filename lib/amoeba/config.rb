@@ -61,17 +61,15 @@ module Amoeba
       @config[:enabled] = true
     end
 
+    def copy_to_database(value)
+      if value.is_a?(String)
+        @config[:copy_to] = value
+      end
+    end
+
     def limit_relations(value)
-      puts "Value: #{value}"
-      puts "Type: #{value.class}"
-
       if value.is_a?(Hash)
-        puts "Value: #{value}"
-        puts "Type: #{value.class}"
-  
         @config[:limits] = value
-
-        puts @config[:limits]
       end
     end
 
