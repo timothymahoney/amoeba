@@ -14,7 +14,7 @@ module Amoeba
     def initialize(object, options = {})
       @old_object = object
       @options    = options
-      puts @options[:copy_to_database]
+      puts @options["copy_to_database"]
       @object_klass = @old_object.class
       inherit_parent_settings
       @new_object = object.__send__(amoeba.dup_method)
