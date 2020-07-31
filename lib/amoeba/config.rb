@@ -62,6 +62,7 @@ module Amoeba
     end
 
     def copy_to_database(value)
+      puts "SETTING COPY_TO: #{value}"
       if value.is_a?(String)
         @config[:copy_to] = value
       end
