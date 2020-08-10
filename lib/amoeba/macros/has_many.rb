@@ -15,8 +15,8 @@ module Amoeba
         # rather than only maintaining the associations
         limit_val = @cloner.amoeba.limits[relation_name.to_sym] || nil
         puts "Relation Name: #{relation_name}"
-        puts "Copy to: #{@cloner.amoeba.copy_to}"
-        puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
+        puts "Copy to: #{@options.inspect}"
+        # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           relation_name = remapped_relation_name(relation_name)
@@ -36,8 +36,8 @@ module Amoeba
         
         limit_val = @cloner.amoeba.limits[relation_name] || nil
         puts "Relation Name: #{relation_name}"
-        puts "Copy to: #{@cloner.amoeba.copy_to}"
-        puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
+        puts "Copy to: #{@options.inspect}"
+        # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           copy_of_obj = old_obj.amoeba_dup(@options)
