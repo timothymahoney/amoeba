@@ -40,10 +40,11 @@ module Amoeba
         # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
-          copy_of_obj = old_obj.amoeba_dup(@options)
-          
-          #ActiveRecord::Base.establish_connection('cutdown')
-          
+          if @options[:copy_to]
+            ActiveRecord::Base.establish_connection(@options[:copy_to])
+            old_obj.save!
+          end
+          copy_of_obj = old_obj.amoeba_dup(@options)          
           copy_of_obj[:"#{association.foreign_key}"] = nil
           relation_name = remapped_relation_name(relation_name)
           # associate this new child to the new parent object
