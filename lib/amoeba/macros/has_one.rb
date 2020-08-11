@@ -8,7 +8,9 @@ module Amoeba
         copy_of_obj = old_obj.amoeba_dup(@options)
         if @options[:copy_to]
           ActiveRecord::Base.establish_connection(@options[:copy_to])
-          copy_of_obj.save(validate: false)
+          # copy_of_obj.save(validate: false)
+          cp = relation_name.classify.constantize.new(copy_of_obj.attributes)
+          cp.save()
           ActiveRecord::Base.establish_connection("production")
         end
         copy_of_obj[:"#{association.foreign_key}"] = nil

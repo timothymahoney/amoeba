@@ -22,7 +22,9 @@ module Amoeba
           relation_name = remapped_relation_name(relation_name)
           if @options[:copy_to]
             ActiveRecord::Base.establish_connection(@options[:copy_to])
-            old_obj.save(validate: false)
+            # old_obj.save(validate: false)
+            cp = relation_name.classify.constantize.new(old_obj.attributes)
+            cp.save()
             ActiveRecord::Base.establish_connection("production")
           end
           # associate this new child to the new parent object
@@ -48,7 +50,9 @@ module Amoeba
           copy_of_obj = old_obj.amoeba_dup(@options)
           if @options[:copy_to]
             ActiveRecord::Base.establish_connection(@options[:copy_to])
-            copy_of_obj.save(validate: false)
+            cp = relation_name.classify.constantize.new(copy_of_obj.attributes)
+            cp.save()
+            # copy_of_obj.save(validate: false)
             ActiveRecord::Base.establish_connection("production")
           end
           copy_of_obj[:"#{association.foreign_key}"] = nil

@@ -12,7 +12,9 @@ module Amoeba
         # associate this new child to the new parent object
         if @options[:copy_to]
           ActiveRecord::Base.establish_connection(@options[:copy_to])
-          old_obj.save(validate: false)
+          # old_obj.save(validate: false)
+          cp = relation_name.classify.constantize.new(old_obj.attributes)
+          cp.save()
           ActiveRecord::Base.establish_connection("production")
         end
         old_obj = old_obj.amoeba_dup if clone
