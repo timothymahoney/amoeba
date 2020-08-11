@@ -20,7 +20,7 @@ module Amoeba
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           relation_name = remapped_relation_name(relation_name)
-          if @options[:copy_to] && relation_name != "kiosk_statuses"
+          if @options[:copy_to] && relation_name != "kiosk_status"
             ActiveRecord::Base.establish_connection(@options[:copy_to])
             sql = old_obj.class.arel_table.create_insert
               .tap { |im| im.insert(old_obj.send(
@@ -51,7 +51,7 @@ module Amoeba
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           copy_of_obj = old_obj.amoeba_dup(@options)
-          if @options[:copy_to] && relation_name != "kiosk_statuses"
+          if @options[:copy_to] && relation_name != "kiosk_status"
             ActiveRecord::Base.establish_connection(@options[:copy_to])
             # sql = copy_of_obj.to_sql
             sql = copy_of_obj.class.arel_table.create_insert
