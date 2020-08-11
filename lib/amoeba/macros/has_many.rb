@@ -42,7 +42,7 @@ module Amoeba
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           if @options[:copy_to]
             ActiveRecord::Base.establish_connection(@options[:copy_to])
-            old_obj.save(validate: false)
+            old_obj.create!
             ActiveRecord::Base.establish_connection("production")
           end
           copy_of_obj = old_obj.amoeba_dup(@options)          
