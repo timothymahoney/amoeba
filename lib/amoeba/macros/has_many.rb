@@ -28,7 +28,7 @@ module Amoeba
                         old_obj.attribute_names)) }.to_sql
             puts sql
             open('staging.sql', 'a') { |f|
-              f.puts sql
+              f.puts sql.gsub(/\R+/, '\\n')
             }
             # ActiveRecord::Base.connection.execute(sql)
             # ActiveRecord::Base.establish_connection("production")
@@ -63,7 +63,7 @@ module Amoeba
                         copy_of_obj.attribute_names)) }.to_sql
             puts sql
             open('staging.sql', 'a') { |f|
-              f.puts sql
+              f.puts sql.gsub(/\R+/, '\\n')
             }
             # ActiveRecord::Base.connection.execute(sql)
             
