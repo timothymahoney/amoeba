@@ -2,11 +2,10 @@ module Amoeba
   module Macros
     class Base
       def initialize(cloner)
-        puts cloner.options
         @cloner     = cloner
         @old_object = cloner.old_object
         @new_object = cloner.new_object
-        # @options = cloner.options
+        @options = cloner.options
       end
 
       def follow(_relation_name, _association)
