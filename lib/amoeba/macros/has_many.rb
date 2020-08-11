@@ -55,7 +55,7 @@ module Amoeba
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           copy_of_obj = old_obj.amoeba_dup(@options)
           if @options[:copy_to] && relation_name != "kiosk_status"
-            ActiveRecord::Base.establish_connection(@options[:copy_to])
+            # ActiveRecord::Base.establish_connection(@options[:copy_to])
             # sql = copy_of_obj.to_sql
             sql = copy_of_obj.class.arel_table.create_insert
               .tap { |im| im.insert(copy_of_obj.send(
@@ -65,11 +65,11 @@ module Amoeba
             open('staging.sql', 'a') { |f|
               f.puts sql
             }
-            ActiveRecord::Base.connection.execute(sql)
+            # ActiveRecord::Base.connection.execute(sql)
             
             # puts cp.errors.full_messages
             # copy_of_obj.save(validate: false)
-            ActiveRecord::Base.establish_connection("production")
+            # ActiveRecord::Base.establish_connection("production")
           end
           copy_of_obj[:"#{association.foreign_key}"] = nil
           relation_name = remapped_relation_name(relation_name)
