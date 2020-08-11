@@ -31,7 +31,6 @@ module Amoeba
     end
 
     def amoeba_dup(options = {})
-      puts options.inspect
       ::Amoeba::Cloner.new(self, options).run
     end
   end
