@@ -14,8 +14,8 @@ module Amoeba
         # actually copy  and reassociate the  new children
         # rather than only maintaining the associations
         limit_val = @cloner.amoeba.limits[relation_name.to_sym] || nil
-        puts "Relation Name: #{relation_name}"
-        puts "1: #{@cloner.inspect}"
+        # puts "Relation Name: #{relation_name}"
+        # puts "1: #{@cloner.inspect}"
         # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
@@ -35,12 +35,15 @@ module Amoeba
         return if association.is_a?(ActiveRecord::Reflection::ThroughReflection)
         
         limit_val = @cloner.amoeba.limits[relation_name] || nil
-        puts "Relation Name: #{relation_name}"
-        puts "2: #{@options.inspect}"
+        # puts "Relation Name: #{relation_name}"
+        puts "2: #{@options.copy_to}"
         # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           copy_of_obj = old_obj.amoeba_dup(@options)
+          
+          #ActiveRecord::Base.establish_connection('cutdown')
+          
           copy_of_obj[:"#{association.foreign_key}"] = nil
           relation_name = remapped_relation_name(relation_name)
           # associate this new child to the new parent object
