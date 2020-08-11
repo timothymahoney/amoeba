@@ -2,6 +2,7 @@ module Amoeba
   module Macros
     class HasOne < ::Amoeba::Macros::Base
       def follow(relation_name, association)
+        puts "Relation Name: #{relation_name}"
         return if association.is_a?(::ActiveRecord::Reflection::ThroughReflection)
         old_obj = @old_object.__send__(relation_name)
         return unless old_obj
@@ -9,7 +10,7 @@ module Amoeba
         if @options[:copy_to]
           ActiveRecord::Base.establish_connection(@options[:copy_to])
           # copy_of_obj.save(validate: false)
-          cp = relation_name.classify.constantize.new(copy_of_obj.attributes)
+          cp = copy_of_obj.class.name.new(copy_of_obj.attributes)
           cp.save()
           ActiveRecord::Base.establish_connection("production")
         end

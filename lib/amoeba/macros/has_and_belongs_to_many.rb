@@ -10,10 +10,11 @@ module Amoeba
 
       def fill_relation(relation_name, old_obj, clone)
         # associate this new child to the new parent object
+        puts "Relation Name: #{relation_name}"
         if @options[:copy_to]
           ActiveRecord::Base.establish_connection(@options[:copy_to])
           # old_obj.save(validate: false)
-          cp = relation_name.classify.constantize.new(old_obj.attributes)
+          cp = old_obj.class.name.new(old_obj.attributes)
           cp.save()
           ActiveRecord::Base.establish_connection("production")
         end

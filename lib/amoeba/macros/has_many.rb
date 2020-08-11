@@ -14,7 +14,7 @@ module Amoeba
         # actually copy  and reassociate the  new children
         # rather than only maintaining the associations
         limit_val = @cloner.amoeba.limits[relation_name.to_sym] || nil
-        # puts "Relation Name: #{relation_name}"
+        puts "Relation Name: #{relation_name}"
         # puts "1: #{@cloner.inspect}"
         # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
@@ -23,7 +23,7 @@ module Amoeba
           if @options[:copy_to]
             ActiveRecord::Base.establish_connection(@options[:copy_to])
             # old_obj.save(validate: false)
-            cp = relation_name.classify.constantize.new(old_obj.attributes)
+            cp = old_obj.class.name.new(old_obj.attributes)
             cp.save()
             ActiveRecord::Base.establish_connection("production")
           end
@@ -42,7 +42,7 @@ module Amoeba
         return if association.is_a?(ActiveRecord::Reflection::ThroughReflection)
         
         limit_val = @cloner.amoeba.limits[relation_name] || nil
-        # puts "Relation Name: #{relation_name}"
+        puts "Relation Name: #{relation_name}"
         # puts "2: #{@options[:copy_to]}"
         # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
@@ -50,7 +50,7 @@ module Amoeba
           copy_of_obj = old_obj.amoeba_dup(@options)
           if @options[:copy_to]
             ActiveRecord::Base.establish_connection(@options[:copy_to])
-            cp = relation_name.classify.constantize.new(copy_of_obj.attributes)
+            cp = copy_of_obj.class.name.new(copy_of_obj.attributes)
             cp.save()
             # copy_of_obj.save(validate: false)
             ActiveRecord::Base.establish_connection("production")
