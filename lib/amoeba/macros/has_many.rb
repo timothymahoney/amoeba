@@ -21,14 +21,17 @@ module Amoeba
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           relation_name = remapped_relation_name(relation_name)
           if @options[:copy_to] && relation_name != "kiosk_status"
-            ActiveRecord::Base.establish_connection(@options[:copy_to])
+            # ActiveRecord::Base.establish_connection(@options[:copy_to])
             sql = old_obj.class.arel_table.create_insert
               .tap { |im| im.insert(old_obj.send(
                         :arel_attributes_with_values_for_create,
                         old_obj.attribute_names)) }.to_sql
             puts sql
-            ActiveRecord::Base.connection.execute(sql)
-            ActiveRecord::Base.establish_connection("production")
+            open('staging.sql', 'a') { |f|
+              f.puts sql
+            }
+            # ActiveRecord::Base.connection.execute(sql)
+            # ActiveRecord::Base.establish_connection("production")
           end
           # associate this new child to the new parent object
           @new_object.__send__(relation_name) << old_obj.amoeba_dup(@options)
@@ -59,6 +62,9 @@ module Amoeba
                         :arel_attributes_with_values_for_create,
                         copy_of_obj.attribute_names)) }.to_sql
             puts sql
+            open('staging.sql', 'a') { |f|
+              f.puts sql
+            }
             ActiveRecord::Base.connection.execute(sql)
             
             # puts cp.errors.full_messages
