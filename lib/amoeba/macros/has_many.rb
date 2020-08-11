@@ -36,7 +36,7 @@ module Amoeba
         
         limit_val = @cloner.amoeba.limits[relation_name] || nil
         puts "Relation Name: #{relation_name}"
-        puts "2: #{@cloner.inspect}"
+        puts "2: #{@options.inspect}"
         # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
