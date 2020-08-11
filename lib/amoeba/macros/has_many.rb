@@ -23,7 +23,7 @@ module Amoeba
           if @options[:copy_to]
             ActiveRecord::Base.establish_connection(@options[:copy_to])
             # old_obj.save(validate: false)
-            cp = old_obj.class.name.new(old_obj.attributes)
+            cp = old_obj.class.name.constantize.new(old_obj.attributes)
             cp.save()
             ActiveRecord::Base.establish_connection("production")
           end
@@ -50,7 +50,7 @@ module Amoeba
           copy_of_obj = old_obj.amoeba_dup(@options)
           if @options[:copy_to]
             ActiveRecord::Base.establish_connection(@options[:copy_to])
-            cp = copy_of_obj.class.name.new(copy_of_obj.attributes)
+            cp = copy_of_obj.class.name.constantize.new(copy_of_obj.attributes)
             cp.save()
             # copy_of_obj.save(validate: false)
             ActiveRecord::Base.establish_connection("production")

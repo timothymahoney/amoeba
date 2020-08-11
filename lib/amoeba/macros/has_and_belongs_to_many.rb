@@ -14,7 +14,7 @@ module Amoeba
         if @options[:copy_to]
           ActiveRecord::Base.establish_connection(@options[:copy_to])
           # old_obj.save(validate: false)
-          cp = old_obj.class.name.new(old_obj.attributes)
+          cp = old_obj.class.name.constantize.new(old_obj.attributes)
           cp.save()
           ActiveRecord::Base.establish_connection("production")
         end
