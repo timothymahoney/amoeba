@@ -25,6 +25,7 @@ module Amoeba
             # old_obj.save(validate: false)
             cp = old_obj.class.name.constantize.new(old_obj.attributes)
             cp.save()
+            puts cp.errors.full_messages
             ActiveRecord::Base.establish_connection("production")
           end
           # associate this new child to the new parent object
@@ -52,6 +53,7 @@ module Amoeba
             ActiveRecord::Base.establish_connection(@options[:copy_to])
             cp = copy_of_obj.class.name.constantize.new(copy_of_obj.attributes)
             cp.save()
+            puts cp.errors.full_messages
             # copy_of_obj.save(validate: false)
             ActiveRecord::Base.establish_connection("production")
           end

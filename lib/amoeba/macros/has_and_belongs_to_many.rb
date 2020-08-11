@@ -16,6 +16,7 @@ module Amoeba
           # old_obj.save(validate: false)
           cp = old_obj.class.name.constantize.new(old_obj.attributes)
           cp.save()
+          puts cp.errors.full_messages
           ActiveRecord::Base.establish_connection("production")
         end
         old_obj = old_obj.amoeba_dup if clone

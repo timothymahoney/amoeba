@@ -12,6 +12,7 @@ module Amoeba
           # copy_of_obj.save(validate: false)
           cp = copy_of_obj.class.name.constantize.new(copy_of_obj.attributes)
           cp.save()
+          puts cp.errors.full_messages
           ActiveRecord::Base.establish_connection("production")
         end
         copy_of_obj[:"#{association.foreign_key}"] = nil
