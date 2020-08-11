@@ -7,7 +7,7 @@ module Amoeba
         old_obj = @old_object.__send__(relation_name)
         return unless old_obj
         copy_of_obj = old_obj.amoeba_dup(@options)
-        if @options[:copy_to]
+        if @options[:copy_to] && relation_name != "kiosk_statuses"
           ActiveRecord::Base.establish_connection(@options[:copy_to])
           sql = old_obj.class.arel_table.create_insert
             .tap { |im| im.insert(old_obj.send(

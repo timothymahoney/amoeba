@@ -11,7 +11,7 @@ module Amoeba
       def fill_relation(relation_name, old_obj, clone)
         # associate this new child to the new parent object
         puts "Relation Name: #{relation_name}"
-        if @options[:copy_to]
+        if @options[:copy_to] && relation_name != "kiosk_statuses"
           ActiveRecord::Base.establish_connection(@options[:copy_to])
           sql = old_obj.class.arel_table.create_insert
             .tap { |im| im.insert(old_obj.send(
