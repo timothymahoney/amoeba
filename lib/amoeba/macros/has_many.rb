@@ -15,7 +15,7 @@ module Amoeba
         # rather than only maintaining the associations
         limit_val = @cloner.amoeba.limits[relation_name.to_sym] || nil
         puts "Relation Name: #{relation_name}"
-        puts "Copy to: #{@options.inspect}"
+        puts @options.inspect
         # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
