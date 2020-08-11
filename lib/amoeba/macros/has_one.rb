@@ -10,9 +10,12 @@ module Amoeba
         if @options[:copy_to]
           ActiveRecord::Base.establish_connection(@options[:copy_to])
           # copy_of_obj.save(validate: false)
-          cp = copy_of_obj.class.name.constantize.new(copy_of_obj.attributes)
-          cp.save()
-          puts cp.errors.full_messages
+          # cp = copy_of_obj.class.name.constantize.new(copy_of_obj.attributes)
+          # cp.save()
+          # puts cp.errors.full_messages
+          sql = copy_of_obj.to_sql
+          puts sql
+          ActiveRecord::Base.connection.execute(sql)
           ActiveRecord::Base.establish_connection("production")
         end
         copy_of_obj[:"#{association.foreign_key}"] = nil

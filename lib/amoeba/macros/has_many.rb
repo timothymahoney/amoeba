@@ -23,9 +23,13 @@ module Amoeba
           if @options[:copy_to]
             ActiveRecord::Base.establish_connection(@options[:copy_to])
             # old_obj.save(validate: false)
-            cp = old_obj.class.name.constantize.new(old_obj.attributes)
-            cp.save()
-            puts cp.errors.full_messages
+            # cp = old_obj.class.name.constantize.new(old_obj.attributes)
+            # cp.save()
+            # puts cp.errors.full_messages
+            sql = old_obj.to_sql
+            puts sql
+            ActiveRecord::Base.connection.execute(sql)
+
             ActiveRecord::Base.establish_connection("production")
           end
           # associate this new child to the new parent object
@@ -51,9 +55,15 @@ module Amoeba
           copy_of_obj = old_obj.amoeba_dup(@options)
           if @options[:copy_to]
             ActiveRecord::Base.establish_connection(@options[:copy_to])
-            cp = copy_of_obj.class.name.constantize.new(copy_of_obj.attributes)
-            cp.save()
-            puts cp.errors.full_messages
+            # sql = copy_of_obj.to_sql
+            sql = copy_of_obj.class.arel_table.create_insert
+              .tap { |im| im.insert(copy_of_obj.send(
+                        :arel_attributes_with_values_for_create,
+                        copy_of_obj.attribute_names)) }.to_sql
+            puts sql
+            ActiveRecord::Base.connection.execute(sql)
+            
+            # puts cp.errors.full_messages
             # copy_of_obj.save(validate: false)
             ActiveRecord::Base.establish_connection("production")
           end
