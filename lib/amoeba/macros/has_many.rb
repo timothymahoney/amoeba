@@ -43,6 +43,7 @@ module Amoeba
           if @options[:copy_to]
             ActiveRecord::Base.establish_connection(@options[:copy_to])
             old_obj.save!
+            ActiveRecord::Base.establish_connection("production")
           end
           copy_of_obj = old_obj.amoeba_dup(@options)          
           copy_of_obj[:"#{association.foreign_key}"] = nil
