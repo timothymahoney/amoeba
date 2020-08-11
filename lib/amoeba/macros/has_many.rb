@@ -21,7 +21,7 @@ module Amoeba
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           relation_name = remapped_relation_name(relation_name)
           # associate this new child to the new parent object
-          @new_object.__send__(relation_name) << old_obj.amoeba_dup(@options)
+          @new_object.__send__(relation_name) << old_obj.amoeba_dup
         end
       end
 

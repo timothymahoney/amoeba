@@ -8,7 +8,6 @@ module Amoeba
       raised:         false,
       dup_method:     :dup,
       remap_method:   nil,
-      copy_to:        nil,
       limits:         {},
       includes:       {},
       excludes:       {},
@@ -59,13 +58,6 @@ module Amoeba
 
     def enable
       @config[:enabled] = true
-    end
-
-    def copy_to_database(value)
-      puts "SETTING COPY_TO: #{value}"
-      if value.is_a?(String)
-        @config[:copy_to] = value
-      end
     end
 
     def limit_relations(value)
