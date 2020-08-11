@@ -10,6 +10,11 @@ module Amoeba
 
       def fill_relation(relation_name, old_obj, clone)
         # associate this new child to the new parent object
+        if @options[:copy_to]
+          ActiveRecord::Base.establish_connection(@options[:copy_to])
+          old_obj.save(validate: false)
+          ActiveRecord::Base.establish_connection("production")
+        end
         old_obj = old_obj.amoeba_dup if clone
         relation_name = remapped_relation_name(relation_name)
         @new_object.__send__(relation_name) << old_obj
