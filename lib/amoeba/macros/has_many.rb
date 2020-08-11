@@ -2,7 +2,6 @@ module Amoeba
   module Macros
     class HasMany < ::Amoeba::Macros::Base
       def follow(relation_name, association)
-        puts @cloner.inspect
         if @cloner.amoeba.clones.include?(relation_name.to_sym)
           follow_with_clone(relation_name)
         else
@@ -16,7 +15,7 @@ module Amoeba
         # rather than only maintaining the associations
         limit_val = @cloner.amoeba.limits[relation_name.to_sym] || nil
         puts "Relation Name: #{relation_name}"
-        puts @options.inspect
+        puts @old_object.options.inspect
         # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
@@ -37,7 +36,7 @@ module Amoeba
         
         limit_val = @cloner.amoeba.limits[relation_name] || nil
         puts "Relation Name: #{relation_name}"
-        puts @options.inspect
+        puts @old_object.options.inspect
         # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
