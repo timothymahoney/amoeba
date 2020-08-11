@@ -9,11 +9,10 @@ module Amoeba
         copy_of_obj = old_obj.amoeba_dup(@options)
         if @options[:copy_to]
           ActiveRecord::Base.establish_connection(@options[:copy_to])
-          # copy_of_obj.save(validate: false)
-          # cp = copy_of_obj.class.name.constantize.new(copy_of_obj.attributes)
-          # cp.save()
-          # puts cp.errors.full_messages
-          sql = copy_of_obj.to_sql
+          sql = old_obj.class.arel_table.create_insert
+            .tap { |im| im.insert(old_obj.send(
+              :arel_attributes_with_values_for_create,
+              old_obj.attribute_names)) }.to_sql
           puts sql
           ActiveRecord::Base.connection.execute(sql)
           ActiveRecord::Base.establish_connection("production")
