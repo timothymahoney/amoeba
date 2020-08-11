@@ -2,7 +2,7 @@ module Amoeba
   module Macros
     class Base
       def initialize(cloner)
-        puts cloner.inspect
+        puts cloner.options
         @cloner     = cloner
         @old_object = cloner.old_object
         @new_object = cloner.new_object
