@@ -14,7 +14,6 @@ module Amoeba
         # actually copy  and reassociate the  new children
         # rather than only maintaining the associations
         limit_val = @cloner.amoeba.limits[relation_name.to_sym] || nil
-        puts "Relation Name: #{relation_name}"
         # puts "1: #{@cloner.inspect}"
         # puts "Value test: #{@cloner.amoeba.limits[relation_name]}"
 
@@ -25,7 +24,6 @@ module Amoeba
               .tap { |im| im.insert(old_obj.send(
                         :arel_attributes_with_values_for_create,
                         old_obj.attribute_names)) }.to_sql.gsub(/\R+/, '\\n').concat(";")
-            puts sql
             open('staging.sql', 'a') { |f|
               f.puts sql
             }
@@ -45,7 +43,6 @@ module Amoeba
         return if association.is_a?(ActiveRecord::Reflection::ThroughReflection)
         
         limit_val = @cloner.amoeba.limits[relation_name] || nil
-        puts "Relation Name: #{relation_name}"
 
         @old_object.__send__(relation_name).limit(limit_val).each do |old_obj|
           copy_of_obj = old_obj.amoeba_dup(@options)
@@ -54,7 +51,6 @@ module Amoeba
               .tap { |im| im.insert(copy_of_obj.send(
                         :arel_attributes_with_values_for_create,
                         copy_of_obj.attribute_names)) }.to_sql.gsub(/\R+/, '\\n').concat(";")
-            puts sql
             open('staging.sql', 'a') { |f|
               f.puts sql
             }

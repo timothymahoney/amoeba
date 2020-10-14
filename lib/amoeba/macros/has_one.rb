@@ -2,7 +2,6 @@ module Amoeba
   module Macros
     class HasOne < ::Amoeba::Macros::Base
       def follow(relation_name, association)
-        puts "Relation Name: #{relation_name}"
         return if association.is_a?(::ActiveRecord::Reflection::ThroughReflection)
         old_obj = @old_object.__send__(relation_name)
         return unless old_obj
@@ -12,7 +11,6 @@ module Amoeba
             .tap { |im| im.insert(old_obj.send(
               :arel_attributes_with_values_for_create,
               old_obj.attribute_names)) }.to_sql.gsub(/\R+/, '\\n').concat(";")
-          puts sql
           open('staging.sql', 'a') { |f|
             f.puts sql
           }
