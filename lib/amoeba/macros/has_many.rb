@@ -24,7 +24,7 @@ module Amoeba
               .tap { |im| im.insert(old_obj.send(
                         :arel_attributes_with_values_for_create,
                         old_obj.attribute_names)) }.to_sql.gsub(/\R+/, '\\n').concat(";")
-            open('staging.sql', 'a') { |f|
+            open('dbdump/staging.sql', 'a') { |f|
               f.puts sql
             }
           end
@@ -51,7 +51,7 @@ module Amoeba
               .tap { |im| im.insert(copy_of_obj.send(
                         :arel_attributes_with_values_for_create,
                         copy_of_obj.attribute_names)) }.to_sql.gsub(/\R+/, '\\n').concat(";")
-            open('staging.sql', 'a') { |f|
+            open('dbdump/staging.sql', 'a') { |f|
               f.puts sql
             }
           end
